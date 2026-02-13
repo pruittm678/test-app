@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-
 export const metadata: Metadata = {
-  title: "CineRank - Rank Your Favorite Movies",
+  title: "The Marquee — Rank the Pictures",
   description:
-    "Search trending movies, build your personal ranked list with drag-and-drop.",
+    "A head-to-head movie ranking experience, styled in the grandeur of Old Hollywood.",
 };
 
 export default function RootLayout({
@@ -21,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} font-[family-name:var(--font-geist-sans)] antialiased`}>
+      <body className="antialiased">
         {children}
       </body>
     </html>

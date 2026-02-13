@@ -2,35 +2,484 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Cinzel:wght@400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&display=swap');
+
 :root {
-  --background: #09090b;
-  --foreground: #e4e4e7;
+  --font-display: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-heading: 'Cinzel', serif;
+
+  --gold: #D4AF37;
+  --gold-light: #f0dca0;
+  --gold-dark: #9a7a22;
+  --velvet: #4A0404;
+  --velvet-deep: #1a0202;
+  --tuxedo: #0a0a0a;
+  --brass: #C5A55A;
+  --silver: #C0C0C0;
+  --sepia: #C4A77D;
+  --cream: #F5E6C8;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--cream);
+  background: var(--velvet-deep);
+  font-family: var(--font-serif);
+  overflow-x: hidden;
 }
 
-@layer utilities {
-  .glassmorphism {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
+/* ═══════════════════════════════════════
+   FILM GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+.film-grain::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")
+    repeat;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.5;
+  animation: grain 0.5s steps(4) infinite;
 }
 
-/* Scrollbar styling */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-5%, -5%); }
+  50% { transform: translate(5%, 5%); }
+  75% { transform: translate(-2%, 2%); }
+}
+
+/* ═══════════════════════════════════════
+   VELVET TEXTURE BACKGROUND
+   ═══════════════════════════════════════ */
+.velvet-bg {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(74, 4, 4, 0.8) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(74, 4, 4, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(90, 10, 10, 0.4) 0%, transparent 50%),
+    linear-gradient(180deg, #0a0a0a 0%, #1a0202 30%, #2d0505 60%, #1a0202 100%);
+}
+
+/* ═══════════════════════════════════════
+   GOLD METALLIC TEXT
+   ═══════════════════════════════════════ */
+.gold-text {
+  background: linear-gradient(
+    135deg,
+    #bf953f 0%,
+    #fcf6ba 25%,
+    #d4af37 50%,
+    #fcf6ba 75%,
+    #bf953f 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ═══════════════════════════════════════
+   GOLD METALLIC BORDER
+   ═══════════════════════════════════════ */
+.gold-border {
+  border: 2px solid;
+  border-image: linear-gradient(
+    135deg,
+    #bf953f 0%,
+    #fcf6ba 30%,
+    #d4af37 50%,
+    #fcf6ba 70%,
+    #bf953f 100%
+  ) 1;
+}
+
+.gold-border-rounded {
+  border: 2px solid #D4AF37;
+  box-shadow:
+    0 0 8px rgba(212, 175, 55, 0.3),
+    inset 0 0 8px rgba(212, 175, 55, 0.1);
+}
+
+/* ═══════════════════════════════════════
+   ART DECO DECORATIVE ELEMENTS
+   ═══════════════════════════════════════ */
+.art-deco-line {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #bf953f 15%,
+    #fcf6ba 30%,
+    #d4af37 50%,
+    #fcf6ba 70%,
+    #bf953f 85%,
+    transparent 100%
+  );
+}
+
+.art-deco-corner::before,
+.art-deco-corner::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: #D4AF37;
+}
+
+.art-deco-corner::before {
+  top: -2px;
+  left: -2px;
+  border-top: 3px solid;
+  border-left: 3px solid;
+  border-color: #D4AF37;
+}
+
+.art-deco-corner::after {
+  bottom: -2px;
+  right: -2px;
+  border-bottom: 3px solid;
+  border-right: 3px solid;
+  border-color: #D4AF37;
+}
+
+/* ═══════════════════════════════════════
+   ORNATE FRAME
+   ═══════════════════════════════════════ */
+.ornate-frame {
+  position: relative;
+  border: 3px solid #D4AF37;
+  box-shadow:
+    0 0 0 1px #0a0a0a,
+    0 0 0 4px #9a7a22,
+    0 0 0 5px #0a0a0a,
+    0 0 20px rgba(212, 175, 55, 0.2),
+    inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ═══════════════════════════════════════
+   TICKET STUB INPUT
+   ═══════════════════════════════════════ */
+.ticket-input {
+  background: linear-gradient(135deg, #1a0f00 0%, #0d0805 100%);
+  border: 2px solid #D4AF37;
+  box-shadow:
+    0 0 10px rgba(212, 175, 55, 0.15),
+    inset 0 2px 6px rgba(0, 0, 0, 0.5);
+  color: var(--cream);
+  font-family: var(--font-serif);
+}
+
+.ticket-input::placeholder {
+  color: var(--sepia);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.ticket-input:focus {
+  outline: none;
+  border-color: #fcf6ba;
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.3),
+    inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* ═══════════════════════════════════════
+   MARQUEE ROW (for ranked list)
+   ═══════════════════════════════════════ */
+.marquee-row {
+  background: linear-gradient(
+    135deg,
+    rgba(26, 2, 2, 0.9) 0%,
+    rgba(45, 5, 5, 0.95) 50%,
+    rgba(26, 2, 2, 0.9) 100%
+  );
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow:
+    0 0 12px rgba(212, 175, 55, 0.15),
+    inset 0 1px 0 rgba(212, 175, 55, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.marquee-row:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(212, 175, 55, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════
+   VIBE CHECK BUTTONS
+   ═══════════════════════════════════════ */
+.vibe-btn {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.vibe-btn:active {
+  transform: scale(0.95);
+}
+
+.vibe-btn-gold {
+  background: radial-gradient(circle at 30% 30%, #fcf6ba, #d4af37 40%, #9a7a22 100%);
+  color: #1a0202;
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.4),
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(252, 246, 186, 0.5);
+}
+
+.vibe-btn-gold:hover {
+  box-shadow:
+    0 0 30px rgba(212, 175, 55, 0.6),
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(252, 246, 186, 0.5);
+}
+
+.vibe-btn-silver {
+  background: radial-gradient(circle at 30% 30%, #e8e8e8, #c0c0c0 40%, #808080 100%);
+  color: #1a0202;
+  box-shadow:
+    0 0 15px rgba(192, 192, 192, 0.3),
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.vibe-btn-silver:hover {
+  box-shadow:
+    0 0 25px rgba(192, 192, 192, 0.5),
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.vibe-btn-torn {
+  background: radial-gradient(circle at 30% 30%, #8B4513, #5C2E0E 40%, #3a1a00 100%);
+  color: var(--cream);
+  box-shadow:
+    0 0 15px rgba(139, 69, 19, 0.3),
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(196, 167, 125, 0.3);
+}
+
+.vibe-btn-torn:hover {
+  box-shadow:
+    0 0 25px rgba(139, 69, 19, 0.5),
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(196, 167, 125, 0.3);
+}
+
+/* ═══════════════════════════════════════
+   VS SUNBURST
+   ═══════════════════════════════════════ */
+.sunburst {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sunburst::before {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(212, 175, 55, 0.15) 10deg,
+    transparent 20deg,
+    transparent 30deg,
+    rgba(212, 175, 55, 0.15) 40deg,
+    transparent 50deg,
+    transparent 60deg,
+    rgba(212, 175, 55, 0.15) 70deg,
+    transparent 80deg,
+    transparent 90deg,
+    rgba(212, 175, 55, 0.15) 100deg,
+    transparent 110deg,
+    transparent 120deg,
+    rgba(212, 175, 55, 0.15) 130deg,
+    transparent 140deg,
+    transparent 150deg,
+    rgba(212, 175, 55, 0.15) 160deg,
+    transparent 170deg,
+    transparent 180deg,
+    rgba(212, 175, 55, 0.15) 190deg,
+    transparent 200deg,
+    transparent 210deg,
+    rgba(212, 175, 55, 0.15) 220deg,
+    transparent 230deg,
+    transparent 240deg,
+    rgba(212, 175, 55, 0.15) 250deg,
+    transparent 260deg,
+    transparent 270deg,
+    rgba(212, 175, 55, 0.15) 280deg,
+    transparent 290deg,
+    transparent 300deg,
+    rgba(212, 175, 55, 0.15) 310deg,
+    transparent 320deg,
+    transparent 330deg,
+    rgba(212, 175, 55, 0.15) 340deg,
+    transparent 350deg,
+    transparent 360deg
+  );
+  border-radius: 50%;
+  animation: sunburst-spin 20s linear infinite;
+}
+
+@keyframes sunburst-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════
+   PILL BUTTON
+   ═══════════════════════════════════════ */
+.pill-btn {
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: 2px solid #D4AF37;
+  background: linear-gradient(135deg, rgba(26, 2, 2, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+  color: var(--gold);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+}
+
+.pill-btn:hover {
+  background: linear-gradient(135deg, #D4AF37 0%, #9a7a22 100%);
+  color: #1a0202;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+}
+
+.pill-btn:active {
+  transform: scale(0.97);
+}
+
+/* ═══════════════════════════════════════
+   GOLD STAR (for rankings)
+   ═══════════════════════════════════════ */
+.gold-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle at 35% 35%, #fcf6ba, #d4af37 50%, #9a7a22 100%);
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  color: #1a0202;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.8rem;
+  filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.4));
+}
+
+/* ═══════════════════════════════════════
+   SCORE CIRCLE
+   ═══════════════════════════════════════ */
+.score-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #D4AF37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+  box-shadow:
+    0 0 10px rgba(212, 175, 55, 0.2),
+    inset 0 0 10px rgba(212, 175, 55, 0.1);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 0.85rem;
+}
+
+/* ═══════════════════════════════════════
+   NAV TABS
+   ═══════════════════════════════════════ */
+.nav-tab {
+  padding: 8px 20px;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-tab:hover {
+  color: var(--gold);
+}
+
+.nav-tab-active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ═══════════════════════════════════════
+   SCROLLBAR STYLING
+   ═══════════════════════════════════════ */
 ::-webkit-scrollbar {
+  width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(26, 2, 2, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: rgba(212, 175, 55, 0.3);
   border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.5);
 }
